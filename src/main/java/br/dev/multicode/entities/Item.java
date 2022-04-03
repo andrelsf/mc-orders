@@ -1,8 +1,10 @@
 package br.dev.multicode.entities;
 
 import br.dev.multicode.api.http.requests.ItemOrderRequest;
+import br.dev.multicode.api.http.responses.ItemResponse;
 import java.math.BigDecimal;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,6 +39,15 @@ public class Item {
 
   @Column(nullable = false)
   private BigDecimal price;
+
+  public ItemResponse toItemResponse()
+  {
+    return ItemResponse.builder()
+        .productId(UUID.fromString(productId))
+        .amount(amount)
+        .price(price)
+        .build();
+  }
 
   public static Item of(ItemOrderRequest itemOrderRequest)
   {

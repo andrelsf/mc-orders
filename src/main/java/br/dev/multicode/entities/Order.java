@@ -1,12 +1,15 @@
 package br.dev.multicode.entities;
 
 import br.dev.multicode.api.http.requests.OrderRequest;
+import br.dev.multicode.api.http.responses.ItemResponse;
+import br.dev.multicode.api.http.responses.OrderResponse;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -79,6 +82,18 @@ public class Order extends PanacheEntityBase {
         .status(OrderStatus.CREATED)
         .items(Item.of(orderRequest.getItems()))
         .price(orderRequest.getPrice())
+        .build();
+  }
+
+  public OrderResponse toResponse() {
+    return OrderResponse.builder()
+        .orderId(id)
+        .userId(userId)
+        .status(status.name())
+        .items(items.stream()
+            .map(Item::toItemResponse)
+            .collect(Collectors.toSet()))
+        .price(price.toString())
         .build();
   }
 }
