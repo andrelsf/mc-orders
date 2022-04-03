@@ -1,0 +1,21 @@
+{
+  "userId": "6a6e8f0b-6b3e-4fa9-b238-a5afd934d6c9",
+  "items": [
+    {
+      "productId": "6b31c3f4-2587-4789-bce9-ea4071f37ceb",
+      "amount": 1,
+      "price": 59.9
+    },
+    {
+      "productId": "3085eaa9-408e-4e12-8b23-9614e480dd0d",
+      "amount": 1,
+      "price": 99.9
+    },
+    {
+      "productId": "cfe5d7d4-6c62-47ed-9c59-212d75d91f58",
+      "amount": 1,
+      "price": 49.9
+    }
+  ],
+  "price": 209.7
+}
