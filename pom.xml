@@ -21,6 +21,7 @@
     <quarkus.platform.version>2.7.5.Final</quarkus.platform.version>
     <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
     <lombok.version>1.18.22</lombok.version>
+    <vertx-kafka-client.version>4.2.6</vertx-kafka-client.version>
   </properties>
 
   <dependencyManagement>
@@ -36,6 +37,19 @@
   </dependencyManagement>
 
   <dependencies>
+    <!-- Library internal -->
+    <dependency>
+      <groupId>br.dev.multicode</groupId>
+      <artifactId>mc-lib</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+
+    <!-- Smallrye Reactive messaging Kafka -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-reactive-messaging-kafka</artifactId>
+    </dependency>
+
     <!-- Hibernate ORM specific dependencies -->
     <dependency>
       <groupId>io.quarkus</groupId>
