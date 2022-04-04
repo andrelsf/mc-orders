@@ -25,3 +25,16 @@ quarkus:
       enable: true
       level: INFO
       format: "%d{HH:mm:ss} %-5p traceId=%X{traceId}, parentId=%X{parentId}, spanId=%X{spanId}, sampled=%X{sampled} [%c{2.}] (%t) %s%e%n"
+
+kafka:
+  bootstrap:
+    servers: localhost:9092
+mp:
+  messaging:
+    outgoing:
+      # Configuring the outgoing channel (writing to Kafka)
+      sec-new-order:
+        connector: smallrye-kafka
+        topic: sec-new-order
+        value:
+          serializer: io.quarkus.kafka.client.serialization.JsonbSerializer
