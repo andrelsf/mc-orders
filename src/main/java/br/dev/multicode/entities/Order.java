@@ -1,8 +1,10 @@
 package br.dev.multicode.entities;
 
 import br.dev.multicode.api.http.requests.OrderRequest;
-import br.dev.multicode.api.http.responses.ItemResponse;
 import br.dev.multicode.api.http.responses.OrderResponse;
+import br.dev.multicode.enums.OrderStatus;
+import br.dev.multicode.models.ItemMessage;
+import br.dev.multicode.models.OrderMessage;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -85,7 +87,8 @@ public class Order extends PanacheEntityBase {
         .build();
   }
 
-  public OrderResponse toResponse() {
+  public OrderResponse toResponse()
+  {
     return OrderResponse.builder()
         .orderId(id)
         .userId(userId)
@@ -94,6 +97,20 @@ public class Order extends PanacheEntityBase {
             .map(Item::toItemResponse)
             .collect(Collectors.toSet()))
         .price(price.toString())
+        .build();
+  }
+
+  public OrderMessage toOrderMessage()
+  {
+    return OrderMessage.builder()
+        .eventId(UUID.randomUUID())
+        .orderId(UUID.fromString(id))
+        .userId(UUID.fromString(userId))
+        .status(status)
+        .items(items.stream()
+            .map(item -> new ItemMessage(item.getProductId(), item.getAmount()))
+            .collect(Collectors.toSet()))
+        .price(price)
         .build();
   }
 }
