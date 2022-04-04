@@ -5,6 +5,7 @@ import br.dev.multicode.api.http.responses.OrderResponse;
 import br.dev.multicode.entities.Order;
 import br.dev.multicode.repositories.OrderRepository;
 import br.dev.multicode.services.OrderService;
+import br.dev.multicode.services.kafka.producers.OrderProducer;
 import java.util.UUID;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -13,12 +14,17 @@ import javax.inject.Inject;
 public class OrderServiceImpl implements OrderService {
 
   @Inject
+  OrderProducer orderProducer;
+
+  @Inject
   OrderRepository orderRepository;
 
   @Override
   public String create(OrderRequest orderRequest)
   {
-    return orderRepository.save(Order.of(orderRequest));
+    Order order = orderRepository.save(Order.of(orderRequest));
+    orderProducer.sendOrderToKafka(order.toOrderMessage());
+    return order.getId();
   }
 
   @Override
