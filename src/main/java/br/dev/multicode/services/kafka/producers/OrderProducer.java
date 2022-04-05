@@ -25,7 +25,7 @@ public class OrderProducer {
             return CompletableFuture.completedFuture(null);
         })
         .withNack(throwable -> {
-          log.infof("Message sent failed. ERROR: %s", throwable.getMessage());
+          log.errorf("Message sent failed. ERROR: %s", throwable.getMessage());
           return CompletableFuture.completedFuture(null);
         }));
   }
