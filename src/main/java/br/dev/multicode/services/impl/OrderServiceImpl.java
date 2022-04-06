@@ -3,6 +3,7 @@ package br.dev.multicode.services.impl;
 import br.dev.multicode.api.http.requests.OrderRequest;
 import br.dev.multicode.api.http.responses.OrderResponse;
 import br.dev.multicode.entities.Order;
+import br.dev.multicode.models.CurrentOrderStatus;
 import br.dev.multicode.repositories.OrderRepository;
 import br.dev.multicode.services.OrderService;
 import br.dev.multicode.services.kafka.producers.OrderProducer;
@@ -31,5 +32,11 @@ public class OrderServiceImpl implements OrderService {
   public OrderResponse getOrderById(UUID orderId) {
     final Order order = orderRepository.findOrderById(orderId);
     return order.toResponse();
+  }
+
+  @Override
+  public void updateStatus(CurrentOrderStatus currentOrderStatus)
+  {
+    orderRepository.updateStatusById(currentOrderStatus.getOrderId(), currentOrderStatus.getStatus());
   }
 }
