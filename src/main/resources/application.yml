@@ -31,6 +31,13 @@ kafka:
     servers: localhost:9092
 mp:
   messaging:
+    incoming:
+      # Configuring the incoming channel (reading from Kafka)
+      sec-order-status:
+        connector: smallrye-kafka
+        topic: sec-order-status
+        value:
+          deserializer: br.dev.multicode.utils.deserializers.CurrentOrderStatusDeserializer
     outgoing:
       # Configuring the outgoing channel (writing to Kafka)
       sec-new-order:
