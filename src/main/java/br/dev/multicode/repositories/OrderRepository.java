@@ -19,8 +19,10 @@ public class OrderRepository implements PanacheRepository<Order> {
     return order;
   }
 
-  public Order findOrderById(UUID orderId) {
-    return this.find("order_id=:orderId", Parameters.with("orderId", orderId.toString())).firstResultOptional()
+  public Order findOrderById(UUID orderId)
+  {
+    return this.find("order_id=:orderId", Parameters.with("orderId", orderId.toString()))
+        .firstResultOptional()
         .orElseThrow(() ->
             new NotFoundException("Order not found by id=".concat(orderId.toString())));
   }
