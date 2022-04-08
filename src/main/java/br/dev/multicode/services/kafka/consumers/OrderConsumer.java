@@ -1,8 +1,8 @@
 package br.dev.multicode.services.kafka.consumers;
 
 import br.dev.multicode.models.CurrentOrderStatus;
-import br.dev.multicode.models.OrderMessage;
 import br.dev.multicode.services.OrderService;
+import io.smallrye.reactive.messaging.annotations.Blocking;
 import io.smallrye.reactive.messaging.kafka.api.IncomingKafkaRecordMetadata;
 import java.util.concurrent.CompletionStage;
 import javax.enterprise.context.ApplicationScoped;
@@ -19,6 +19,7 @@ public class OrderConsumer {
   @Inject
   OrderService orderService;
 
+  @Blocking
   @Incoming("sec-order-status")
   public CompletionStage<Void> receiveOrderStatusFromKafka(Message<CurrentOrderStatus> currentOrderStatusMessage)
   {
